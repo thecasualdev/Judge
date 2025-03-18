@@ -1,5 +1,6 @@
-use std::vec;
 use serenity::{all::{ClientBuilder, Context, EventHandler, GuildId, GatewayIntents, Interaction, Ready}, async_trait};
+use colored::Colorize;
+use std::vec;
 
 mod commands;
 
@@ -9,7 +10,7 @@ impl EventHandler for Handler {
 
     async fn ready(&self, ctx: Context, ready: Ready) {
 
-        println!("🚀 {} is online!", ready.user.name);
+        println!("{}", format!("🚀 {} is online!", ready.user.name).bright_green());
 
         let guild_id = GuildId::new(
             dotenv::var("GUILD_ID")
@@ -25,7 +26,10 @@ impl EventHandler for Handler {
             ]
         ).await.unwrap();
 
-        println!("💡 Successfully registered the following commands: {}", commands.into_iter().map(|c| c.name).collect::<Vec<String>>().join(", "));
+        println!("{}",
+            format!("💡 Successfully registered the following commands: {}", commands.into_iter().map(|c| c.name).collect::<Vec<String>>().join(", ").bold()
+            ).bright_yellow()
+        );
 
     }
 
@@ -46,7 +50,7 @@ impl EventHandler for Handler {
 async fn main() {
 
     let discord_token: String = dotenv::var("DISCORD_TOKEN").unwrap();
-    let intents: GatewayIntents = GatewayIntents::GUILD_MESSAGES;
+    let intents: GatewayIntents = GatewayIntents::GUILD_MESSAGES | GatewayIntents::GUILD_MODERATION;
     let mut client = ClientBuilder::new(&discord_token, intents)
         .event_handler(Handler)
         .await

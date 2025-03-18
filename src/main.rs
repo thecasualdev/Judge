@@ -22,7 +22,8 @@ impl EventHandler for Handler {
         let commands = guild_id.set_commands(
             &ctx.http,
             vec![
-               commands::ping::register()
+               commands::ping::register(),
+               commands::fetch::register()
             ]
         ).await.unwrap();
 
@@ -38,6 +39,9 @@ impl EventHandler for Handler {
             match cmd.data.name.as_str() {
                 "ping" =>{
                     commands::ping::run(&ctx, &cmd).await;
+                }
+                "fetch" =>{
+                    commands::fetch::run(&ctx, &cmd).await;
                 }
                 _ => {}
             }

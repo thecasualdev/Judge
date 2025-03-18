@@ -19,7 +19,7 @@ pub async fn run(ctx: &Context, interaction: &CommandInteraction) {
     let msg = interaction.create_followup(&ctx.http, response).await;
 
     if let Err(e) = msg {
-        println!("Failed to respond  to ping command: {}", e)
+        println!("Failed to respond to ping command: {}", e)
     }
 
 }

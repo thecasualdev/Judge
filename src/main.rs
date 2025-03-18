@@ -1,4 +1,4 @@
-use serenity::{all::{ClientBuilder, Context, EventHandler, GuildId, GatewayIntents, Interaction, Ready}, async_trait};
+use serenity::{all::{ActivityData, ClientBuilder, Context, EventHandler, GatewayIntents, GuildId, Interaction, Ready}, async_trait};
 use colored::Colorize;
 use std::vec;
 
@@ -9,6 +9,9 @@ struct Handler;
 impl EventHandler for Handler {
 
     async fn ready(&self, ctx: Context, ready: Ready) {
+
+        let activity= ActivityData::watching("Cinnanoe Ban Data");
+        ctx.set_activity(Some(activity));
 
         println!("{}", format!("🚀 {} is online!", ready.user.name).bright_green());
 
@@ -23,7 +26,8 @@ impl EventHandler for Handler {
             &ctx.http,
             vec![
                commands::ping::register(),
-               commands::fetch::register()
+               commands::fetch::register(),
+               commands::save::register()
             ]
         ).await.unwrap();
 
@@ -39,6 +43,9 @@ impl EventHandler for Handler {
             match cmd.data.name.as_str() {
                 "ping" =>{
                     commands::ping::run(&ctx, &cmd).await;
+                }
+                "save" => {
+                    commands::save::run(&ctx, &cmd).await;
                 }
                 "fetch" =>{
                     commands::fetch::run(&ctx, &cmd).await;

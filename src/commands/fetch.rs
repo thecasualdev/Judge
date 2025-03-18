@@ -1,8 +1,9 @@
-use serenity::all::{Colour, CommandInteraction, Context, CreateCommand, CreateEmbed, CreateInteractionResponseFollowup};
+use serenity::all::{Colour, CommandInteraction, Context, CreateCommand, CreateEmbed, CreateInteractionResponseFollowup, Permissions};
 
 pub fn register() -> CreateCommand{
     CreateCommand::new("fetch")
     .description("Gets a count of blocked members.")
+    .default_member_permissions(Permissions::BAN_MEMBERS)
 }
 
 pub async fn run(ctx: &Context, interaction: &CommandInteraction) {

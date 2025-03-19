@@ -21,3 +21,6 @@ target/
 
 # Added by cargo
 /target
+
+# output file
+output.txt

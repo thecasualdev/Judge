@@ -27,7 +27,8 @@ impl EventHandler for Handler {
             vec![
                commands::ping::register(),
                commands::fetch::register(),
-               commands::save::register()
+               commands::save::register(),
+               commands::load::register()
             ]
         ).await.unwrap();
 
@@ -49,6 +50,9 @@ impl EventHandler for Handler {
                 }
                 "fetch" =>{
                     commands::fetch::run(&ctx, &cmd).await;
+                }
+                "load" => {
+                    commands::load::run(&ctx, &cmd).await;
                 }
                 _ => {}
             }
